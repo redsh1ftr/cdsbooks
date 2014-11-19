@@ -1,0 +1,1 @@
+C:\xampp\htdocs\cdsbooks\app/views/qb_attorneys/index.blade.php
