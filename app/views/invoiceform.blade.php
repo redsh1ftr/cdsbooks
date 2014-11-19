@@ -3,7 +3,8 @@
 
 
 
-<?php $custlist = DB::table('qbatty')->get();?>
+<?php $custlist = DB::table('qbatty')->get();
+      $defaults = DB::table('invoice_defaults')->first();?>
 
 <div style="margin:50px">
 
@@ -57,7 +58,7 @@
 
 <td>{{Form::label('dvds', 'DVD Count:')}}<td>{{Form::text('dvds')}}<tr>
 
-
+<td>{{Form::label('date', 'Date: ')}}<td>{{Form::text('date', $defaults->date)}}<tr>
 
 
 
@@ -90,6 +91,8 @@
 <td>{{Form::checkbox('cancelled', '1')}} <td>{{Form::label('jobcancelled', 'JOB CANCELLED')}} <tr><tr>
 
 <td>{{Form::checkbox('settled', '1')}}<td> CASE SETTLED<tr><tr>
+
+<td>{{Form::checkbox('abstract', '1')}}<td> ABSTRACTED/AMENDED SUBPOENA<tr><tr>
 
 
 

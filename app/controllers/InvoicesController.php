@@ -60,16 +60,15 @@ class InvoicesController extends \BaseController {
 		
 		$currentinvoice = DB::table('invoice_defaults')->where('id', '=', 1)->first();
 
-		$today = Carbon::parse('today')->format('m/d/Y');
+		$today = Input::get('invdate');
 
-		$due = Carbon::parse('today')->addDays(30)->format('m/d/Y');
+		$due = Carbon::parse($today)->addDays(30)->format('m/d/Y');
 
 		$newinvnum = Input::get('invnum');
 
 		$newname = Input::get('invnum');
 
 		$name = Input::get('jobnum');
-
 
 		$npdf = PDF::loadView('finalize', array(
 			'addr1' => Input::get('addr1'),
@@ -95,7 +94,8 @@ class InvoicesController extends \BaseController {
 		$npdf->save("//CDS007/007Data/Record Covers/invoices/$newname - $name.pdf");
 
 
-		DB::table('invoice_defaults')->where('id', '=', 1)->update(array('invoice_number' => $newinvnum));
+		DB::table('invoice_defaults')->where('id', '=', 1)->update(array('invoice_number' => $newinvnum, 'date' => $today));
+
 
 
 		$makeinvL1 = new ToQuickbooks;

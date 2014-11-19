@@ -6,7 +6,7 @@ class CreateInvoice extends Eloquent {
 
 
 	static function lastchance_verbiage(){
-				$jobinfo = DB::table('lojob')->where('jobnum', '=', Input::get('jobnum'))->first();
+		$jobinfo = DB::table('lojob')->where('jobnum', '=', Input::get('jobnum'))->first();
 		$includedjobinfo = DB::table('lojob')->where('jobnum', '=', Input::get('incjob'))->first();
 		$caseinfo = DB::table('locases')->where('casenum', '=', $jobinfo->casenum)->first();
 		$pages = Input::get('pages');
@@ -110,6 +110,13 @@ class CreateInvoice extends Eloquent {
 	 	$other = Input::get('other');
 		$otherquantity = Input::get('otherquantity');
 		$digitized = Input::get('digitized');
+		$abstract = Input::get('abstract');
+
+		if($abstract > ''){
+			$abstractverb = " - AMENDED/ABSTRACTED SUBPOENA";
+		}else{
+			$abstractverb = ''; 
+		}
 
 
 		if($pages > ''){
@@ -204,7 +211,7 @@ class CreateInvoice extends Eloquent {
 		Closing as case has settled. $caseinfo->caption";
 
 		}else{
-			$verb = "Reproduction of Records received from Deponent $jobinfo->deponent regarding $jobinfo->nor ($pagescount $cdverbiage $dvdverbiage $filmverbiage $suppagescount $otherverbiage) - $caseinfo->caption";
+			$verb = "Reproduction of Records received from Deponent $jobinfo->deponent regarding $jobinfo->nor ($pagescount $cdverbiage $dvdverbiage $filmverbiage $suppagescount $otherverbiage) - $caseinfo->caption $abstractverb";
 		}
 
 
@@ -396,6 +403,13 @@ class CreateInvoice extends Eloquent {
 		$filmfac = Input::get('filmfac');
 		$resup = $random - $supp;
 		$getjt = Input::get('julietaylor');
+		$abstract = Input::get('abstract');
+
+		if($abstract > ''){
+			$abstractamt = 15;
+		}else{
+			$abstractamt = '';
+		}
 
 
 		if($suppages > ''){
@@ -417,7 +431,7 @@ class CreateInvoice extends Eloquent {
 		if(Input::get('julietaylor') == 'jt'){
 
 			$jtprice = 20;
-			$repro =  CreateInvoice::jt_cd_price(Input::get('dvds')) + CreateInvoice::jt_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 20;
+			$repro =  CreateInvoice::jt_cd_price(Input::get('dvds')) + CreateInvoice::jt_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 20 +$abstractamt;
 
 		}elseif(Input::get('julietaylor') == 'notjt'){
 
@@ -427,12 +441,12 @@ class CreateInvoice extends Eloquent {
 		}elseif(Input::get('julietaylor') == 'requestor'){
 
 			$jtprice = 10;
-			$repro =  CreateInvoice::notreq_cd_price(Input::get('dvds')) + CreateInvoice::notreq_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 10;
+			$repro =  CreateInvoice::notreq_cd_price(Input::get('dvds')) + CreateInvoice::notreq_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 10 + $abstractamt;
 
 		}elseif(Input::get('julietaylor') == 'kenwilliams'){
 			
 			$jtprice = 15;
-			$repro =  CreateInvoice::notreq_cd_price(Input::get('dvds')) + CreateInvoice::notreq_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 15;}}
+			$repro =  CreateInvoice::notreq_cd_price(Input::get('dvds')) + CreateInvoice::notreq_cd_price(Input::get('cds')) + CreateInvoice::other_price() + CreateInvoice::page_price(Input::get('pages')) + $resup + 15 + $abstractamt;}}
 		
 	
 

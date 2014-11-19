@@ -102,13 +102,15 @@
 				accounting@cdservicesinc.com
 			</div>	
 
+			<?php $invdate = Carbon::parse(Input::get('date'))->format('m/d/Y');?>
 
 
-			<div class="invoicedatedata">{{ Form::text('invdate', Carbon::parse('today')->format('m/d/Y'), array('style' => 'width:65px'))}}</div>
+
+			<div class="invoicedatedata">{{ Form::text('invdate', $invdate, array('style' => 'width:65px'))}}</div>
 			<div class="invoicenumdata">{{ Form::text('invnum', CreateInvoice::get_invoicenum(), array('style' => 'width:70px'))}}</div>
 			<div class="jobnumdata">{{Input::get('jobnum')}}</div>
 			<div class="termsdata">Net 30</div>
-			<div class="duedatedata">{{ Form::text('duedate', Carbon::parse('today')->addDays('30')->format('m/d/Y'), array('style' => 'width:65px'))}}</div>
+			<div class="duedatedata">{{ Form::text('duedate', Carbon::parse($invdate)->addDays('30')->format('m/d/Y'), array('style' => 'width:65px'))}}</div>
 			<div class="filenum">
 				
 
